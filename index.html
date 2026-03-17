@@ -198,7 +198,169 @@ button{
   transition:width 0.22s cubic-bezier(0.4,0,0.2,1), min-width 0.22s;
   -webkit-user-select:none; user-select:none;
 }
-#sidebar.collapsed{ width:0; min-width:0; }
+/* ── 새 노트 버튼 ── */
+#newNoteBtn{
+  width:100%; padding:9px 0;
+  background:var(--accent); color:#fff;
+  border-radius:10px; font-size:13px; font-weight:700;
+  font-family:'Syne',sans-serif; cursor:pointer;
+  border:none; transition:background 0.14s;
+  touch-action:manipulation;
+}
+#newNoteBtn:hover{ background:#6a59e0; }
+
+/* ── 사이드바 섹션 ── */
+.sidebar-section{
+  padding:10px 12px;
+  border-bottom:1px solid var(--border);
+  flex-shrink:0;
+}
+
+/* ── 카테고리 라벨 행 ── */
+.sidebar-label{
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:7px;
+}
+.sidebar-label-text{
+  font-size:10px; font-weight:700; color:var(--sub);
+  text-transform:uppercase; letter-spacing:0.08em;
+}
+.sidebar-add-btn{
+  width:24px; height:24px; border-radius:7px;
+  background:var(--card2); color:var(--sub);
+  border:1px solid var(--border); font-size:14px; font-weight:700;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; transition:all 0.14s; flex-shrink:0;
+  font-family:'Syne',sans-serif; touch-action:manipulation;
+  line-height:1;
+}
+.sidebar-add-btn:hover{
+  background:var(--accent-light); color:var(--accent); border-color:var(--accent);
+}
+
+/* ── 카테고리 목록 ── */
+#noteCategoryList{
+  display:flex; flex-direction:column; gap:2px;
+  max-height:150px; overflow-y:auto;
+}
+.cat-item{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:6px 9px; border-radius:8px; cursor:pointer;
+  font-size:12.5px; color:var(--text2); transition:background 0.1s;
+  touch-action:manipulation;
+}
+.cat-item:hover{ background:var(--card2); color:var(--text); }
+.cat-item.active{
+  background:var(--accent-light); color:var(--accent); font-weight:700;
+}
+.cat-del{
+  font-size:11px; color:var(--sub); cursor:pointer;
+  padding:2px 5px; border-radius:5px; opacity:0;
+  transition:opacity 0.12s; flex-shrink:0;
+}
+.cat-item:hover .cat-del{ opacity:1; }
+.cat-del:hover{ color:var(--red); background:rgba(247,106,106,0.12); }
+
+/* ── 노트 목록 ── */
+#noteList{
+  flex:1; overflow-y:auto; padding:8px 10px;
+  display:flex; flex-direction:column; gap:5px;
+}
+.note-item{
+  padding:10px 11px; border-radius:10px; cursor:pointer;
+  border:1px solid var(--border); background:var(--card);
+  transition:all 0.14s; position:relative;
+  touch-action:manipulation;
+}
+.note-item:hover{ border-color:var(--accent); background:var(--accent-light); }
+.note-item.active{
+  border-color:var(--accent); background:var(--accent-light);
+  box-shadow:0 0 0 1px rgba(124,106,247,0.2);
+}
+.note-item-title{
+  font-size:12.5px; font-weight:700; color:var(--text);
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap; margin-bottom:4px;
+}
+.note-item.active .note-item-title{ color:var(--accent); }
+.note-item-meta{ display:flex; align-items:center; justify-content:space-between; }
+.note-item-date{
+  font-size:10px; color:var(--sub);
+  font-family:'JetBrains Mono',monospace;
+}
+.note-item-del{
+  font-size:12px; color:var(--sub); cursor:pointer;
+  padding:2px 5px; border-radius:5px;
+  opacity:0; transition:opacity 0.12s;
+}
+.note-item:hover .note-item-del{ opacity:1; }
+.note-item-del:hover{ color:var(--red); background:rgba(247,106,106,0.12); }
+
+/* ── 빈 목록 ── */
+.empty-note{
+  text-align:center; padding:20px 10px;
+  color:var(--sub); font-size:12px; line-height:1.7;
+}
+
+/* ══════════════════════════════
+   CANVAS AREA
+══════════════════════════════ */
+#canvasArea{ flex:1; display:flex; flex-direction:column; overflow:hidden; min-width:0; }
+#noteCanvasOuter{
+  flex:1; overflow:auto; background:var(--bg); position:relative; min-width:0;
+}
+#noteZoomSpacer{ position:relative; flex-shrink:0; }
+#noteCanvasContainer{ position:absolute; top:0; left:0; transform-origin:top left; }
+#noteCanvas{
+  display:block; border-radius:8px;
+  box-shadow:0 4px 32px rgba(0,0,0,0.5);
+  cursor:crosshair; touch-action:none;
+}
+#noteTempCanvas{ position:absolute; top:0; left:0; border-radius:8px; pointer-events:none; }
+#noteSelCanvas{  position:absolute; top:0; left:0; border-radius:8px; pointer-events:none; }
+
+.page-sep{
+  position:absolute; left:0; right:0; height:1px;
+  background:rgba(124,106,247,0.2); pointer-events:none;
+}
+
+/* ── Object overlay ── */
+.note-obj-overlay{
+  position:absolute; border:1.5px dashed var(--accent);
+  cursor:move; touch-action:none; z-index:10; border-radius:4px;
+}
+.note-resize-handle{
+  position:absolute; bottom:-7px; right:-7px;
+  width:14px; height:14px; border-radius:50%;
+  background:var(--accent); cursor:se-resize;
+}
+.note-del-handle{
+  position:absolute; top:-9px; right:-9px;
+  width:18px; height:18px; border-radius:50%;
+  background:var(--red); color:#fff; font-size:10px;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; font-weight:700;
+}
+
+/* ── Empty state ── */
+#emptyState{
+  display:none; position:absolute; inset:0;
+  align-items:center; justify-content:center;
+  flex-direction:column; gap:12px;
+  color:var(--sub); pointer-events:none;
+}
+#emptyState.show{ display:flex; }
+#emptyState .big{ font-size:48px; }
+#emptyState .msg{ font-size:13px; font-weight:600; }
+
+/* ── Toast ── */
+#toast{
+  position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px);
+  background:var(--card); color:var(--text); border:1px solid var(--border);
+  padding:8px 20px; border-radius:99px; font-size:12.5px; font-weight:600;
+  box-shadow:var(--shadow-md); opacity:0;
+  transition:all 0.22s; pointer-events:none; z-index:9999; white-space:nowrap;
+}
+#toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
 </style>
 </head>
 <body>
@@ -274,20 +436,24 @@ button{
 
   <!-- Sidebar -->
   <div id="sidebar">
+
+    <!-- 새 노트 버튼 -->
     <div class="sidebar-section">
-      <button id="newNoteBtn" onclick="noteNewNote()">+ 새 노트</button>
+      <button id="newNoteBtn" onclick="noteNewNote()">＋ 새 노트</button>
     </div>
+
+    <!-- 카테고리 -->
     <div class="sidebar-section">
       <div class="sidebar-label">
-        <span>카테고리</span>
-        <button onclick="noteAddCategory()">+</button>
+        <span class="sidebar-label-text">카테고리</span>
+        <button class="sidebar-add-btn" onclick="noteAddCategory()" title="카테고리 추가">＋</button>
       </div>
-      <div id="noteCategoryList" style="display:flex;flex-direction:column;gap:2px;max-height:130px;overflow-y:auto;"></div>
+      <div id="noteCategoryList"></div>
     </div>
+
+    <!-- 노트 목록 -->
     <div id="noteList"></div>
-    <div style="padding:10px 12px;border-top:1px solid var(--border);flex-shrink:0;">
-      <button onclick="noteNewNote()" id="newNoteBtn">+ 새 노트</button>
-    </div>
+
   </div>
 
   <!-- Canvas -->
@@ -373,6 +539,7 @@ function noteSaveIndex(){ localStorage.setItem(NOTE_LS_IDX,JSON.stringify(noteIn
 
 /* ── sidebar render ── */
 function noteRenderSidebar(){
+  // 카테고리
   const catEl=noteEl('noteCategoryList')
   if(catEl) catEl.innerHTML=noteIndex.categories.map(cat=>`
     <div class="cat-item ${noteState.currentCategory===cat?'active':''}"
@@ -381,11 +548,12 @@ function noteRenderSidebar(){
       ${cat!=='일반'?`<span class="cat-del" onclick="event.stopPropagation();noteDeleteCategory('${cat.replace(/'/g,"\\'")}');" title="삭제">✕</span>`:''}
     </div>`).join('')
 
+  // 노트 목록
   const listEl=noteEl('noteList')
   if(!listEl) return
   const notes=noteIndex.notes.filter(n=>n.category===noteState.currentCategory)
   if(!notes.length){
-    listEl.innerHTML='<div class="empty-note">노트가 없습니다.<br>새 노트를 만들어보세요.</div>'
+    listEl.innerHTML='<div class="empty-note">노트가 없습니다.<br>위 버튼으로 새 노트를 만드세요.</div>'
     return
   }
   listEl.innerHTML=notes.map(n=>`
