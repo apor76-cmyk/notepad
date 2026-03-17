@@ -61,427 +61,210 @@ button{
 }
 
 /* ══════════════════════════════
-   HEADER BAR
+   HEADER — 2줄 고정 툴바 (iPad 최적화)
 ══════════════════════════════ */
 #headerBar{
-  display:flex;
-  align-items:center;
-  gap:6px;
-  padding:0 12px;
-  height:48px;
+  display:flex; flex-direction:column;
   background:var(--surface);
   border-bottom:1px solid var(--border);
-  flex-shrink:0;
-  position:relative;
-  z-index:100;
+  flex-shrink:0; position:relative; z-index:100;
+  -webkit-user-select:none; user-select:none;
+}
+/* 행1: 제목 + 저장/동기화/모드 */
+#tb-row1{
+  display:flex; align-items:center; gap:5px;
+  padding:5px 8px; min-height:44px;
+  border-bottom:1px solid var(--border);
+}
+/* 행2: 도구 + 색상 + 옵션 */
+#tb-row2{
+  display:flex; align-items:center; gap:4px;
+  padding:4px 8px; min-height:42px;
 }
 .brand{
-  font-size:15px;
-  font-weight:800;
-  color:var(--accent);
-  letter-spacing:-0.5px;
-  margin-right:6px;
-  white-space:nowrap;
-  flex-shrink:0;
+  font-size:14px; font-weight:800; color:var(--accent);
+  letter-spacing:-0.5px; white-space:nowrap; flex-shrink:0;
 }
 .hbtn{
-  padding:4px 11px;
-  border-radius:8px;
-  background:var(--card2);
-  color:var(--text2);
-  font-size:12px;
-  font-weight:600;
-  border:1px solid var(--border);
-  white-space:nowrap;
-  flex-shrink:0;
+  padding:5px 10px; border-radius:8px;
+  background:var(--card2); color:var(--text2);
+  font-size:12px; font-weight:600;
+  border:1px solid var(--border); white-space:nowrap;
+  flex-shrink:0; touch-action:manipulation;
+  font-family:'Syne',sans-serif; min-height:34px;
 }
 .hbtn:hover{ background:var(--accent-light); color:var(--accent); border-color:var(--accent); }
-.hbtn.primary{ background:var(--accent); color:#fff; border:none; }
-.hbtn.primary:hover{ background:#6a59e0; }
 .hbtn.danger{ color:var(--red); }
 .hbtn.danger:hover{ background:rgba(247,106,106,0.12); border-color:var(--red); }
+.hsep{ width:1px; height:18px; background:var(--border); flex-shrink:0; margin:0 1px; }
+.hspacer{ flex:1; min-width:0; }
 
-.hsep{ width:1px; height:20px; background:var(--border); flex-shrink:0; margin:0 2px; }
+/* 도구 버튼 */
+.tool-btn{
+  width:38px; height:38px; border-radius:9px;
+  background:transparent; color:var(--text2);
+  font-size:17px; border:1.5px solid transparent;
+  flex-shrink:0; display:flex; align-items:center; justify-content:center;
+  touch-action:manipulation;
+}
+.tool-btn:hover{ background:var(--accent-light); border-color:var(--accent); }
+.tool-btn.active-tool{
+  background:var(--accent-light); border-color:var(--accent);
+  box-shadow:0 0 0 2px rgba(124,106,247,0.25);
+}
+
+/* 색상 점 */
+.clr-dot{
+  width:22px; height:22px; border-radius:50%; cursor:pointer;
+  border:2px solid transparent; transition:transform 0.12s;
+  flex-shrink:0; touch-action:manipulation;
+}
+.clr-dot.selected{ border-color:var(--accent); outline:2px solid var(--accent); outline-offset:1px; }
+
+/* 굵기 */
+#noteWidthSliderH{ width:70px; cursor:pointer; flex-shrink:0; accent-color:var(--accent); touch-action:manipulation; }
+#noteWidthLabelH{ font-size:11px; color:var(--sub); min-width:18px; flex-shrink:0; font-family:'JetBrains Mono',monospace; text-align:center; }
+
+/* 줌 */
+#noteZoomLabelH{ font-size:11px; color:var(--sub); min-width:34px; text-align:center; flex-shrink:0; font-family:'JetBrains Mono',monospace; }
+
+/* 제목 */
 #noteTitleInputH{
-  padding:4px 10px;
-  font-family:'Syne',sans-serif;
-  font-size:13px;
-  font-weight:700;
-  background:var(--card);
-  color:var(--text);
-  border:1px solid var(--border);
-  border-radius:8px;
-  min-width:120px;
-  max-width:200px;
-  outline:none;
-  flex-shrink:0;
+  flex:1; min-width:60px; max-width:180px;
+  padding:5px 10px; font-family:'Syne',sans-serif;
+  font-size:13px; font-weight:700;
+  background:var(--card); color:var(--text);
+  border:1px solid var(--border); border-radius:8px;
+  outline:none; min-height:34px;
   transition:border-color 0.14s;
 }
 #noteTitleInputH:focus{ border-color:var(--accent); }
-.hspacer{ flex:1; }
-#noteZoomLabelH{
-  font-size:11px; color:var(--sub);
-  min-width:38px; text-align:center; flex-shrink:0;
-  font-family:'JetBrains Mono',monospace;
-}
 
-/* ── Tool buttons ── */
-.tool-btn{
-  padding:4px 9px;
-  border-radius:8px;
-  background:transparent;
-  color:var(--text2);
-  font-size:15px;
-  border:1.5px solid transparent;
-  flex-shrink:0;
-  line-height:1.3;
+/* 사이드바 토글 */
+#sidebarToggle{
+  width:38px; height:38px; border-radius:9px; font-size:15px;
+  background:var(--card2); color:var(--sub); border:1px solid var(--border);
+  flex-shrink:0; display:flex; align-items:center; justify-content:center;
+  touch-action:manipulation;
 }
-.tool-btn:hover{ background:var(--accent-light); border-color:var(--accent); color:var(--accent); }
-.tool-btn.active-tool{ background:var(--accent-light); border-color:var(--accent); color:var(--accent); }
+#sidebarToggle:hover{ color:var(--accent); border-color:var(--accent); background:var(--accent-light); }
 
-/* ── Color dot ── */
-.clr-dot{
-  width:18px; height:18px; border-radius:50%; cursor:pointer;
-  border:2px solid transparent; transition:transform 0.12s, border-color 0.12s;
-  flex-shrink:0;
+/* 펜 모드 버튼 */
+#palmModeBtn{
+  padding:5px 10px; border-radius:8px; font-size:12px; font-weight:700;
+  border:1.5px solid var(--border); background:var(--card2); color:var(--text2);
+  flex-shrink:0; white-space:nowrap; transition:all 0.14s;
+  font-family:'Syne',sans-serif; touch-action:manipulation; min-height:34px;
 }
-.clr-dot:hover{ transform:scale(1.2); }
-.clr-dot.selected{ border-color:var(--accent); transform:scale(1.15); outline:2px solid var(--accent); outline-offset:1px; }
+#palmModeBtn.pen-only{ background:rgba(124,106,247,0.18); border-color:var(--accent); color:var(--accent); }
+#palmModeBtn.finger-ok{ background:rgba(74,247,196,0.13); border-color:#4af7c4; color:#4af7c4; }
 
-/* ── Width slider ── */
-#noteWidthSliderH{
-  width:60px; cursor:pointer; flex-shrink:0; accent-color:var(--accent);
-}
-
-/* ── Eraser mode bar ── */
+/* 지우개 옵션 바 */
 #noteToolbar2H{
-  display:none;
-  align-items:center;
-  gap:6px;
-  padding:3px 14px;
-  background:var(--surface);
-  border-bottom:1px solid var(--border);
-  flex-shrink:0;
-  font-size:11.5px;
-  color:var(--sub);
-  min-height:34px;
+  display:none; align-items:center; gap:5px;
+  padding:3px 10px; background:var(--card);
+  border-bottom:1px solid var(--border); flex-shrink:0;
+  font-size:11px; color:var(--sub); min-height:32px;
+  -webkit-user-select:none; user-select:none;
 }
 #noteToolbar2H.visible{ display:flex; }
 .mode-pill{
-  padding:2px 10px; border-radius:999px; font-size:11px; font-weight:600;
+  padding:4px 11px; border-radius:999px; font-size:11px; font-weight:600;
   border:1.5px solid var(--border); background:var(--card2); cursor:pointer;
-  transition:all 0.12s; white-space:nowrap; color:var(--text2);
+  transition:all 0.12s; white-space:nowrap; color:var(--text2); touch-action:manipulation;
 }
 .mode-pill:hover{ border-color:var(--accent); color:var(--accent); }
 .mode-pill.active{ background:var(--accent); color:#fff; border-color:var(--accent); }
 
+/* 더블탭 Undo 피드백 */
+#undoFlash{
+  position:fixed; inset:0; background:rgba(124,106,247,0.12);
+  pointer-events:none; opacity:0; z-index:9990; transition:opacity 0.3s;
+}
+#undoFlash.flash{ opacity:1; }
+
 /* ══════════════════════════════
    MAIN LAYOUT
 ══════════════════════════════ */
-#appBody{
-  display:flex;
-  flex:1;
-  overflow:hidden;
-  min-height:0;
-}
+#appBody{ display:flex; flex:1; overflow:hidden; min-height:0; }
 
 /* ══════════════════════════════
    SIDEBAR
 ══════════════════════════════ */
 #sidebar{
   width:220px; min-width:220px;
-  background:var(--surface);
-  border-right:1px solid var(--border);
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
-  flex-shrink:0;
-  transition:transform 0.22s cubic-bezier(0.4,0,0.2,1);
+  background:var(--surface); border-right:1px solid var(--border);
+  display:flex; flex-direction:column; overflow:hidden; flex-shrink:0;
+  transition:width 0.22s cubic-bezier(0.4,0,0.2,1), min-width 0.22s;
+  -webkit-user-select:none; user-select:none;
 }
-#sidebar.collapsed{
-  width:0; min-width:0; overflow:hidden;
-}
-
-.sidebar-section{
-  padding:10px 12px;
-  border-bottom:1px solid var(--border);
-  flex-shrink:0;
-}
-.sidebar-label{
-  font-size:10px; font-weight:700; color:var(--sub);
-  text-transform:uppercase; letter-spacing:0.08em;
-  margin-bottom:6px; display:flex; align-items:center; justify-content:space-between;
-}
-.sidebar-label button{
-  padding:1px 7px; font-size:10px; border-radius:5px;
-  background:var(--card2); color:var(--sub); border:1px solid var(--border);
-  font-family:'Syne',sans-serif; font-weight:600;
-}
-.sidebar-label button:hover{ color:var(--accent); border-color:var(--accent); background:var(--accent-light); }
-
-#newNoteBtn{
-  width:100%; padding:8px;
-  background:var(--accent); color:#fff;
-  border-radius:9px; font-size:12.5px; font-weight:700;
-  font-family:'Syne',sans-serif; cursor:pointer;
-  transition:background 0.14s;
-}
-#newNoteBtn:hover{ background:#6a59e0; }
-
-.cat-item{
-  display:flex; align-items:center; justify-content:space-between;
-  padding:5px 8px; border-radius:7px; cursor:pointer;
-  font-size:12px; color:var(--text2); transition:background 0.1s;
-}
-.cat-item:hover{ background:var(--card2); color:var(--text); }
-.cat-item.active{ background:var(--accent-light); color:var(--accent); font-weight:700; }
-.cat-del{ font-size:10px; color:var(--sub); cursor:pointer; padding:1px 4px; border-radius:4px; }
-.cat-del:hover{ color:var(--red); background:rgba(247,106,106,0.1); }
-
-#noteList{
-  flex:1; overflow-y:auto; padding:8px 10px;
-  display:flex; flex-direction:column; gap:5px;
-}
-
-.note-item{
-  padding:9px 10px;
-  border-radius:9px;
-  cursor:pointer;
-  border:1px solid var(--border);
-  background:var(--card);
-  transition:all 0.12s;
-  position:relative;
-}
-.note-item:hover{ border-color:var(--accent); background:var(--accent-light); }
-.note-item.active{ border-color:var(--accent); background:var(--accent-light); }
-.note-item-title{
-  font-size:12px; font-weight:700; color:var(--text);
-  overflow:hidden; text-overflow:ellipsis; white-space:nowrap; margin-bottom:3px;
-}
-.note-item.active .note-item-title{ color:var(--accent); }
-.note-item-meta{
-  display:flex; align-items:center; justify-content:space-between;
-}
-.note-item-date{ font-size:10px; color:var(--sub); font-family:'JetBrains Mono',monospace; }
-.note-item-del{
-  font-size:11px; color:var(--sub); cursor:pointer; padding:1px 5px; border-radius:4px;
-  opacity:0; transition:opacity 0.12s;
-}
-.note-item:hover .note-item-del{ opacity:1; }
-.note-item-del:hover{ color:var(--red); background:rgba(247,106,106,0.12); }
-
-.sidebar-bottom{
-  padding:10px 12px;
-  border-top:1px solid var(--border);
-  display:flex; gap:5px; flex-shrink:0;
-}
-.sync-btn{
-  flex:1; padding:7px 0; border-radius:8px;
-  font-size:11px; font-weight:700; font-family:'Syne',sans-serif;
-  cursor:pointer; transition:opacity 0.14s;
-}
-.sync-btn:hover{ opacity:0.85; }
-.sync-up{ background:#16a34a; color:#fff; }
-.sync-dn{ background:#0369a1; color:#fff; }
-
-.empty-note{
-  text-align:center; padding:20px 10px; color:var(--sub); font-size:11.5px;
-}
-
-/* ══════════════════════════════
-   CANVAS AREA
-══════════════════════════════ */
-#canvasArea{
-  flex:1; display:flex; flex-direction:column; overflow:hidden; min-width:0;
-}
-
-#noteCanvasOuter{
-  flex:1; overflow:auto; background:var(--bg);
-  position:relative; min-width:0;
-}
-#noteZoomSpacer{ position:relative; flex-shrink:0; }
-#noteCanvasContainer{
-  position:absolute; top:0; left:0; transform-origin:top left;
-}
-#noteCanvas{
-  display:block; border-radius:8px;
-  box-shadow:0 4px 32px rgba(0,0,0,0.5);
-  cursor:crosshair; touch-action:none;
-}
-#noteTempCanvas{ position:absolute; top:0; left:0; border-radius:8px; pointer-events:none; }
-#noteSelCanvas{  position:absolute; top:0; left:0; border-radius:8px; pointer-events:none; }
-
-.page-sep{
-  position:absolute; left:0; right:0; height:1px;
-  background:rgba(124,106,247,0.2); pointer-events:none;
-}
-
-/* ── Object overlay ── */
-.note-obj-overlay{
-  position:absolute; border:1.5px dashed var(--accent);
-  cursor:move; touch-action:none; z-index:10; border-radius:4px;
-}
-.note-resize-handle{
-  position:absolute; bottom:-7px; right:-7px;
-  width:14px; height:14px; border-radius:50%;
-  background:var(--accent); cursor:se-resize;
-}
-.note-del-handle{
-  position:absolute; top:-9px; right:-9px;
-  width:18px; height:18px; border-radius:50%;
-  background:var(--red); color:#fff; font-size:10px;
-  display:flex; align-items:center; justify-content:center;
-  cursor:pointer; font-weight:700;
-}
-
-/* ── Empty state ── */
-#emptyState{
-  display:none;
-  position:absolute; inset:0;
-  align-items:center; justify-content:center;
-  flex-direction:column; gap:12px;
-  color:var(--sub); pointer-events:none;
-}
-#emptyState.show{ display:flex; }
-#emptyState .big{ font-size:48px; }
-#emptyState .msg{ font-size:13px; font-weight:600; }
-
-/* ── Toast ── */
-#toast{
-  position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px);
-  background:var(--card); color:var(--text); border:1px solid var(--border);
-  padding:8px 18px; border-radius:99px; font-size:12.5px; font-weight:600;
-  box-shadow:var(--shadow-md); opacity:0;
-  transition:all 0.22s; pointer-events:none; z-index:9999; white-space:nowrap;
-}
-#toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
-
-/* ── Sidebar toggle button ── */
-#sidebarToggle{
-  padding:4px 9px; font-size:13px; border-radius:8px;
-  background:var(--card2); color:var(--sub); border:1px solid var(--border);
-  flex-shrink:0;
-}
-#sidebarToggle:hover{ color:var(--accent); border-color:var(--accent); background:var(--accent-light); }
-
-/* ── 헤더/사이드바: 펜슬로 텍스트 선택 방지 ── */
-#headerBar, #noteToolbar2H, #sidebar{
-  -webkit-user-select:none;
-  user-select:none;
-}
-/* 버튼/입력이 아닌 헤더 영역은 터치 이벤트 통과 안 함 */
-#headerBar button, #headerBar input[type=range],
-#headerBar input[type=color]{
-  touch-action:manipulation;
-}
-
-/* ══ 손가락 모드 토글 버튼 ══ */
-#palmModeBtn{
-  display:flex; align-items:center; gap:5px;
-  padding:4px 11px; border-radius:8px; font-size:12px; font-weight:700;
-  border:1.5px solid var(--border); background:var(--card2); color:var(--text2);
-  flex-shrink:0; white-space:nowrap; transition:all 0.14s;
-  font-family:'Syne',sans-serif; cursor:pointer;
-}
-#palmModeBtn.pen-only{
-  background:rgba(124,106,247,0.18); border-color:var(--accent); color:var(--accent);
-}
-#palmModeBtn.finger-ok{
-  background:rgba(74,247,196,0.13); border-color:#4af7c4; color:#4af7c4;
-}
-
-/* ── 더블탭 Undo 시각 피드백 ── */
-#undoFlash{
-  position:fixed; inset:0; background:rgba(124,106,247,0.12);
-  pointer-events:none; opacity:0; z-index:9990;
-  transition:opacity 0.3s;
-}
-#undoFlash.flash{ opacity:1; }
-
-/* ── Dark canvas hint ── */
-#canvasHintMsg{
-  position:absolute; top:16px; left:50%; transform:translateX(-50%);
-  background:rgba(124,106,247,0.15); border:1px solid rgba(124,106,247,0.3);
-  color:var(--accent); padding:5px 14px; border-radius:99px;
-  font-size:11px; font-weight:600; pointer-events:none;
-  opacity:0; transition:opacity 0.3s; white-space:nowrap; z-index:5;
-}
-#canvasHintMsg.show{ opacity:1; }
-
-@media(max-width:600px){
-  #sidebar{ width:180px; min-width:180px; }
-  #noteTitleInputH{ max-width:120px; }
-}
+#sidebar.collapsed{ width:0; min-width:0; }
 </style>
 </head>
 <body>
 
-<!-- ══ Header ══ -->
+<!-- ══ Header (2줄 툴바) ══ -->
 <div id="headerBar">
-  <button id="sidebarToggle" onclick="toggleSidebar()" title="사이드바 토글">☰</button>
-  <span class="brand">📝 Notepad</span>
 
-  <input type="color" id="noteColorPickerH" value="#e8e8f0"
-    oninput="noteSetColor(this.value)"
-    style="width:24px;height:24px;border-radius:6px;border:1px solid var(--border);cursor:pointer;padding:1px 2px;flex-shrink:0;">
-  <div id="noteColorDotsH" style="display:flex;gap:3px;align-items:center;"></div>
+  <!-- 1행: 제목 / 저장·동기화 / 모드 -->
+  <div id="tb-row1">
+    <button id="sidebarToggle" onclick="toggleSidebar()" title="사이드바 토글">☰</button>
+    <span class="brand">📝</span>
+    <input id="noteTitleInputH" placeholder="노트 제목..." onchange="noteUpdateTitle()" onblur="noteUpdateTitle()">
+    <div class="hspacer"></div>
+    <button onclick="noteUndo()" class="hbtn" title="실행취소 (Ctrl+Z)">↩</button>
+    <button onclick="noteRedo()" class="hbtn" title="다시실행 (Ctrl+Y)">↪</button>
+    <div class="hsep"></div>
+    <button onclick="noteSyncUpload()" class="hbtn" title="GitHub 저장">⬆</button>
+    <button onclick="noteSyncDownload()" class="hbtn" title="GitHub 불러오기">⬇</button>
+    <div class="hsep"></div>
+    <button id="palmModeBtn" onclick="togglePalmMode()" class="pen-only" title="터치 모드 전환">🖊 펜</button>
+    <button onclick="toggleDarkCanvas()" class="hbtn" id="darkCanvasBtn" title="배경 토글">🌙</button>
+    <button onclick="noteExportPNG()" class="hbtn" title="PNG 저장">💾</button>
+  </div>
 
-  <div class="hsep"></div>
+  <!-- 2행: 도구 / 색상 / 굵기 / 배경 / 사진·텍스트 / 줌 -->
+  <div id="tb-row2">
+    <!-- 도구 버튼 -->
+    <button id="noteTool-pen"       class="tool-btn active-tool" onclick="noteSetTool('pen')"       title="연필 (P)">✏️</button>
+    <button id="noteTool-fountain"  class="tool-btn"             onclick="noteSetTool('fountain')"  title="만년필 (F)">🖊️</button>
+    <button id="noteTool-brush"     class="tool-btn"             onclick="noteSetTool('brush')"     title="붓 (B)">🖌</button>
+    <button id="noteTool-highlight" class="tool-btn"             onclick="noteSetTool('highlight')" title="형광펜 (H)">🟡</button>
+    <button id="noteTool-lasso"     class="tool-btn"             onclick="noteSetTool('lasso')"     title="올가미 (L)">⭕</button>
+    <button id="noteTool-eraser"    class="tool-btn"             onclick="noteSetTool('eraser')"    title="지우개 (E)">⬜</button>
+    <div class="hsep"></div>
+    <!-- 색상 -->
+    <input type="color" id="noteColorPickerH" value="#e8e8f0" oninput="noteSetColor(this.value)"
+      style="width:26px;height:26px;border-radius:6px;border:1px solid var(--border);cursor:pointer;padding:1px 2px;flex-shrink:0;touch-action:manipulation;">
+    <div id="noteColorDotsH" style="display:flex;gap:3px;align-items:center;"></div>
+    <div class="hsep"></div>
+    <!-- 굵기 -->
+    <input type="range" id="noteWidthSliderH" min="1" max="60" value="3" oninput="noteSetWidth(this.value)">
+    <span id="noteWidthLabelH">3</span>
+    <div class="hsep"></div>
+    <!-- 배경 -->
+    <button onclick="noteToggleBgType()" id="noteBgBtnH" class="hbtn">📄</button>
+    <input type="color" id="noteBgColorPickerH" value="#1a1a24" oninput="noteSetBgColor(this.value)"
+      title="배경색" style="width:26px;height:26px;border-radius:6px;border:1px solid var(--border);cursor:pointer;padding:1px 2px;flex-shrink:0;touch-action:manipulation;">
+    <div class="hsep"></div>
+    <!-- 삽입 -->
+    <button onclick="document.getElementById('noteImgInputH').click()" class="hbtn" title="사진 추가">📷</button>
+    <button onclick="noteInsertTextBox()" class="hbtn" title="텍스트 상자">📝</button>
+    <button onclick="noteClearCanvas()" class="hbtn danger" title="전체 초기화">🗑</button>
+    <input type="file" id="noteImgInputH" accept="image/*" style="display:none" onchange="noteHandleFileInput(this)">
+    <div class="hsep"></div>
+    <!-- 줌 -->
+    <button onclick="noteZoomChange(-0.25)" class="hbtn" style="padding:5px 9px;" title="축소">−</button>
+    <span id="noteZoomLabelH">100%</span>
+    <button onclick="noteZoomChange(+0.25)" class="hbtn" style="padding:5px 9px;" title="확대">+</button>
+    <button onclick="noteZoomReset()" class="hbtn" style="padding:5px 8px;font-size:10px;" title="100%">↺</button>
+  </div>
 
-  <button id="noteTool-pen"       class="tool-btn active-tool" onclick="noteSetTool('pen')"       title="연필 (P)">✏️</button>
-  <button id="noteTool-fountain"  class="tool-btn"             onclick="noteSetTool('fountain')"  title="만년필 (F)">🖊️</button>
-  <button id="noteTool-brush"     class="tool-btn"             onclick="noteSetTool('brush')"     title="붓 (B)">🖌</button>
-  <button id="noteTool-highlight" class="tool-btn"             onclick="noteSetTool('highlight')" title="형광펜 (H)">🟡</button>
-  <button id="noteTool-lasso"     class="tool-btn"             onclick="noteSetTool('lasso')"     title="올가미 선택 (L)">⭕</button>
-  <button id="noteTool-eraser"    class="tool-btn"             onclick="noteSetTool('eraser')"    title="지우개 (E)">⬜</button>
-
-  <div class="hsep"></div>
-
-  <span style="font-size:10px;color:var(--sub);white-space:nowrap;flex-shrink:0;">굵기</span>
-  <input type="range" id="noteWidthSliderH" min="1" max="60" value="3"
-    oninput="noteSetWidth(this.value)">
-  <span id="noteWidthLabelH" style="font-size:11px;color:var(--sub);min-width:18px;flex-shrink:0;font-family:'JetBrains Mono',monospace;">3</span>
-
-  <div class="hsep"></div>
-
-  <button onclick="noteUndo()" class="hbtn" title="실행취소 (Ctrl+Z)">↩</button>
-  <button onclick="noteRedo()" class="hbtn" title="다시실행 (Ctrl+Y)">↪</button>
-  <button onclick="noteClearCanvas()" class="hbtn danger" title="전체 초기화">🗑</button>
-
-  <div class="hsep"></div>
-
-  <button onclick="noteToggleBgType()" id="noteBgBtnH" class="hbtn" style="white-space:nowrap;">📄 배경</button>
-  <input type="color" id="noteBgColorPickerH" value="#1a1a24"
-    oninput="noteSetBgColor(this.value)"
-    title="배경색" style="width:24px;height:24px;border-radius:6px;border:1px solid var(--border);cursor:pointer;padding:1px 2px;flex-shrink:0;">
-
-  <div class="hsep"></div>
-
-  <button onclick="document.getElementById('noteImgInputH').click()" class="hbtn" title="사진 추가">📷 사진</button>
-  <button onclick="noteInsertTextBox()" class="hbtn" title="텍스트 상자">📝 텍스트</button>
-  <input type="file" id="noteImgInputH" accept="image/*" style="display:none" onchange="noteHandleFileInput(this)">
-
-  <div class="hsep"></div>
-
-  <button onclick="noteZoomChange(-0.25)" class="hbtn" style="padding:4px 8px;" title="축소">−</button>
-  <span id="noteZoomLabelH">100%</span>
-  <button onclick="noteZoomChange(+0.25)" class="hbtn" style="padding:4px 8px;" title="확대">+</button>
-  <button onclick="noteZoomReset()" class="hbtn" style="padding:4px 7px;font-size:10px;" title="100%">↺</button>
-
-  <div class="hspacer"></div>
-
-  <input id="noteTitleInputH" placeholder="노트 제목..." onchange="noteUpdateTitle()" onblur="noteUpdateTitle()">
-  <button onclick="noteExportPNG()" class="hbtn" title="PNG 저장">💾 PNG</button>
-  <button onclick="toggleDarkCanvas()" class="hbtn" id="darkCanvasBtn" title="배경 다크/라이트 토글">🌙</button>
-
-  <div class="hsep"></div>
-
-  <button id="palmModeBtn" onclick="togglePalmMode()" class="pen-only" title="터치 입력 모드 전환">🖊 펜 전용</button>
 </div>
 
 <div id="undoFlash"></div>
 
-<!-- ── 2nd toolbar (tool options) ── -->
+<!-- ── 지우개/올가미 옵션 바 ── -->
 <div id="noteToolbar2H">
   <span id="noteToolOptsH"></span>
 </div>
@@ -502,9 +285,8 @@ button{
       <div id="noteCategoryList" style="display:flex;flex-direction:column;gap:2px;max-height:130px;overflow-y:auto;"></div>
     </div>
     <div id="noteList"></div>
-    <div class="sidebar-bottom">
-      <button class="sync-btn sync-up" onclick="noteSyncUpload()">⬆ 저장</button>
-      <button class="sync-btn sync-dn" onclick="noteSyncDownload()">⬇ 불러오기</button>
+    <div style="padding:10px 12px;border-top:1px solid var(--border);flex-shrink:0;">
+      <button onclick="noteNewNote()" id="newNoteBtn">+ 새 노트</button>
     </div>
   </div>
 
@@ -865,57 +647,59 @@ function togglePalmMode(){
   }
 }
 
-/* 이벤트가 펜슬인지 판별 */
-function _isPen(e){ return e.pointerType === 'pen' }
-function _isFinger(e){ return e.pointerType === 'touch' || e.pointerType === '' }
+/* 서드파티 스타일러스 호환:
+   pointerType='pen' 이면 확실히 펜.
+   pointerType='touch' 라도 접촉 면적(width/height)이 작으면 스타일러스로 간주.
+   손가락은 보통 width/height 15px 이상 */
+function _isLikelyFinger(e){
+  if(e.pointerType === 'pen') return false      // 정품 펜슬 → 항상 펜
+  if(e.pointerType === 'mouse') return false    // 마우스 → 펜처럼 취급
+  if(e.pointerType === 'touch'){
+    // 접촉면적이 크면 손가락, 작으면 스타일러스
+    const w = e.width  || 0
+    const h = e.height || 0
+    if(w > 0 && h > 0) return (w > 14 || h > 14)
+    // 면적 정보 없으면 터치는 손가락으로 간주
+    return true
+  }
+  return false  // 알 수 없는 타입은 허용
+}
 
-/* ── pointer coordinate (스무딩 강화: getPrecisePos) ── */
+/* ── pointer coordinate (coalescedEvents로 정밀도 향상) ── */
 function noteGetPos(e){
   const canvas = noteEl('noteCanvas')
   const r = canvas.getBoundingClientRect()
-  // coalescedEvents: 고빈도 중간 포인트 수집 → 정확도 향상
-  const pts = (e.getCoalescedEvents ? e.getCoalescedEvents() : [e])
-  const last = pts[pts.length - 1]
   return {
-    x: (last.clientX - r.left) / noteState.zoom,
-    y: (last.clientY - r.top)  / noteState.zoom,
-    p: last.pressure > 0 ? last.pressure : 0.5,
-    _all: pts.map(p => ({
-      x: (p.clientX - r.left) / noteState.zoom,
-      y: (p.clientY - r.top)  / noteState.zoom,
-      p: p.pressure > 0 ? p.pressure : 0.5
-    }))
+    x: (e.clientX - r.left) / noteState.zoom,
+    y: (e.clientY - r.top)  / noteState.zoom,
+    p: e.pressure > 0 ? e.pressure : 0.5
   }
 }
 
 /* ── attach events ── */
 function noteAttachEvents(canvas, outer){
 
-  /* ── 더블탭 Undo 감지 (펜슬 전용) ── */
-  let _lastTapTime = 0, _lastTapPos = null, _doubleTapTimer = null
+  /* ── 더블탭 Undo 감지 (스타일러스/모든 입력 허용) ── */
+  let _lastTapTime = 0, _lastTapPos = null
   canvas.addEventListener('pointerdown', e => {
-    if(!_isPen(e)) return
+    // 손가락 더블탭은 핀치줌 오인식 가능 → 스타일러스만
+    if(_isLikelyFinger(e)) return
     const now = Date.now()
     const r = canvas.getBoundingClientRect()
     const cx = (e.clientX - r.left) / noteState.zoom
     const cy = (e.clientY - r.top)  / noteState.zoom
     const dt = now - _lastTapTime
     const dist = _lastTapPos ? Math.hypot(cx - _lastTapPos.x, cy - _lastTapPos.y) : 999
-    if(dt < 350 && dist < 40){
-      // 더블탭 확정
+    if(dt < 400 && dist < 50){
+      // 더블탭 → Undo
       e.preventDefault()
-      clearTimeout(_doubleTapTimer)
       _lastTapTime = 0; _lastTapPos = null
       noteState.isDrawing = false
       noteState.curStrokePts = []
       noteCtx('noteTempCanvas')?.clearRect(0, 0, noteState._W, noteState._H)
       noteUndo()
-      // 시각 피드백
       const flash = noteEl('undoFlash')
-      if(flash){
-        flash.classList.add('flash')
-        setTimeout(() => flash.classList.remove('flash'), 300)
-      }
+      if(flash){ flash.classList.add('flash'); setTimeout(()=>flash.classList.remove('flash'), 300) }
     } else {
       _lastTapTime = now
       _lastTapPos  = {x: cx, y: cy}
@@ -925,37 +709,43 @@ function noteAttachEvents(canvas, outer){
   /* ── 캔버스 drawing events ── */
   canvas.addEventListener('pointerdown', e => {
     e.preventDefault()
-    // 펜 전용 모드: 손가락 드로잉 차단
-    if(noteState.palmMode && _isFinger(e)) return
+    if(noteState.palmMode && _isLikelyFinger(e)) return  // 펜 전용: 손가락 차단
     notePointerDown(e)
   }, {passive: false})
 
   canvas.addEventListener('pointermove', e => {
     e.preventDefault()
-    if(noteState.palmMode && _isFinger(e)) return
+    if(noteState.palmMode && _isLikelyFinger(e)) return
     notePointerMove(e)
   }, {passive: false})
 
   canvas.addEventListener('pointerup', e => {
     e.preventDefault()
-    if(noteState.palmMode && _isFinger(e)) return
+    if(noteState.palmMode && _isLikelyFinger(e)){
+      // 핀치 포인터 정리는 항상
+      delete noteState._pinchPtrs[e.pointerId]
+      if(Object.keys(noteState._pinchPtrs).length < 2) noteState._pinchDist = 0
+      return
+    }
     notePointerUp(e)
   }, {passive: false})
 
   canvas.addEventListener('pointercancel', e => {
-    if(noteState.palmMode && _isFinger(e)) return
+    delete noteState._pinchPtrs[e.pointerId]
+    if(Object.keys(noteState._pinchPtrs).length < 2) noteState._pinchDist = 0
+    if(noteState.palmMode && _isLikelyFinger(e)) return
     notePointerUp(e)
   })
 
   /* ── 헤더/UI 영역: 펜슬로 텍스트 선택 방지 ── */
   document.getElementById('headerBar')?.addEventListener('pointerdown', e => {
-    if(_isPen(e)) e.preventDefault()
+    if(!_isLikelyFinger(e)) e.preventDefault()
   }, {passive: false})
   document.getElementById('noteToolbar2H')?.addEventListener('pointerdown', e => {
-    if(_isPen(e)) e.preventDefault()
+    if(!_isLikelyFinger(e)) e.preventDefault()
   }, {passive: false})
 
-  /* ── 핀치 줌 (두 손가락) — 펜 전용 모드에서도 손가락 줌은 허용 ── */
+  /* ── 핀치 줌 (두 손가락) — 항상 허용 ── */
   outer.addEventListener('wheel', e => {
     if(e.ctrlKey || e.metaKey){
       e.preventDefault()
@@ -963,55 +753,51 @@ function noteAttachEvents(canvas, outer){
     }
   }, {passive: false})
 
-  // 핀치 포인터 추적 (손가락 2개 → 줌, 드로잉 아님)
-  outer.addEventListener('pointerdown', e => {
-    if(_isFinger(e)) noteState._pinchPtrs[e.pointerId] = {x: e.clientX, y: e.clientY}
-  }, {passive: true})
-
-  outer.addEventListener('pointermove', e => {
-    if(!_isFinger(e) || e.target === canvas) return
+  // 손가락 핀치 추적
+  const _trackPinch = e => {
+    if(!_isLikelyFinger(e)) return
     noteState._pinchPtrs[e.pointerId] = {x: e.clientX, y: e.clientY}
+  }
+  const _doPinchZoom = () => {
     const ptrs = Object.values(noteState._pinchPtrs)
-    if(ptrs.length === 2){
+    if(ptrs.length >= 2){
       const dist = Math.hypot(ptrs[0].x - ptrs[1].x, ptrs[0].y - ptrs[1].y)
       if(noteState._pinchDist > 0){
         noteApplyZoom(Math.max(0.2, Math.min(4, noteState.zoom * (dist / noteState._pinchDist))))
       }
       noteState._pinchDist = dist
+      return true
     }
+    return false
+  }
+
+  outer.addEventListener('pointerdown',  _trackPinch, {passive: true})
+  canvas.addEventListener('pointerdown', _trackPinch, {passive: true})
+
+  outer.addEventListener('pointermove', e => {
+    if(!_isLikelyFinger(e) || e.target === canvas) return
+    _trackPinch(e); _doPinchZoom()
   }, {passive: true})
 
-  // 캔버스 위 핀치 줌 (두 손가락이면 드로잉 중단 후 줌)
   canvas.addEventListener('pointermove', e => {
-    if(!_isFinger(e)) return
-    noteState._pinchPtrs[e.pointerId] = {x: e.clientX, y: e.clientY}
-    const ptrs = Object.values(noteState._pinchPtrs)
-    if(ptrs.length >= 2){
-      // 손가락 2개 → 드로잉 중단하고 줌
+    if(!_isLikelyFinger(e)) return
+    _trackPinch(e)
+    if(_doPinchZoom()){
+      // 핀치 중이면 드로잉 중단
       if(noteState.isDrawing){
         noteState.isDrawing = false
         noteState.curStrokePts = []
         noteCtx('noteTempCanvas')?.clearRect(0, 0, noteState._W, noteState._H)
       }
-      const dist = Math.hypot(ptrs[0].x - ptrs[1].x, ptrs[0].y - ptrs[1].y)
-      if(noteState._pinchDist > 0){
-        noteApplyZoom(Math.max(0.2, Math.min(4, noteState.zoom * (dist / noteState._pinchDist))))
-      }
-      noteState._pinchDist = dist
     }
   }, {passive: true})
 
-  outer.addEventListener('pointerup', e => {
+  const _releasePinch = e => {
     delete noteState._pinchPtrs[e.pointerId]
     if(Object.keys(noteState._pinchPtrs).length < 2) noteState._pinchDist = 0
-  }, {passive: true})
-
-  canvas.addEventListener('pointerup', e => {
-    if(_isFinger(e)){
-      delete noteState._pinchPtrs[e.pointerId]
-      if(Object.keys(noteState._pinchPtrs).length < 2) noteState._pinchDist = 0
-    }
-  }, {passive: true})
+  }
+  outer.addEventListener('pointerup',     _releasePinch, {passive: true})
+  outer.addEventListener('pointercancel', _releasePinch, {passive: true})
 
   /* ── 드래그앤드롭 이미지 ── */
   outer.addEventListener('dragover', e => e.preventDefault())
@@ -1081,16 +867,7 @@ function notePointerDown(e){
 }
 function notePointerMove(e){
   if(Object.keys(noteState._pinchPtrs).length>=2) return
-  // coalescedEvents 로 중간 포인트 모두 수집 → 고정밀 경로
-  const evts = (e.getCoalescedEvents ? e.getCoalescedEvents() : [e])
-  const r = noteEl('noteCanvas').getBoundingClientRect()
-  const toPos = ev => ({
-    x:(ev.clientX-r.left)/noteState.zoom,
-    y:(ev.clientY-r.top)/noteState.zoom,
-    p:ev.pressure>0?ev.pressure:0.5
-  })
-  const pos = toPos(evts[evts.length-1])
-
+  const pos=noteGetPos(e)
   if(noteState.tool==='lasso'&&noteState.selDragging&&noteState.selDragOrigin){
     const dx=pos.x-noteState.selDragOrigin.x, dy=pos.y-noteState.selDragOrigin.y
     noteState.selectedIdxs.forEach((si,ii)=>{
@@ -1100,16 +877,14 @@ function notePointerMove(e){
     noteRedrawCanvas(); noteDrawSelCanvas(); return
   }
   if(noteState.tool==='lasso'&&noteState.lassoActive){
-    evts.forEach(ev => noteState.lassoPts.push([toPos(ev).x, toPos(ev).y]))
+    noteState.lassoPts.push([pos.x,pos.y])
     noteDrawLassoPath(); return
   }
   if(!noteState.isDrawing) return
-
-  // 중간 coalesced 포인트 전부 추가
-  evts.forEach(ev => noteState.curStrokePts.push(toPos(ev)))
+  noteState.curStrokePts.push(pos)
   if(noteState.curStrokePts.length<2) return
   if(noteState.tool==='eraser'&&noteState.eraserMode==='stroke'){
-    evts.forEach(ev => { const p=toPos(ev); noteEraseStrokeAt(p.x,p.y) }); return
+    noteEraseStrokeAt(pos.x,pos.y); return
   }
   const tCtx=noteCtx('noteTempCanvas'); if(!tCtx) return
   tCtx.clearRect(0,0,noteState._W,noteState._H)
